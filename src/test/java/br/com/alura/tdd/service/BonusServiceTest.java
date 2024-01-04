@@ -12,9 +12,17 @@ public class BonusServiceTest {
     @Test
     void bonusDeveriaSerZeroParaFuncionarioComSalarioMuitoAlto(){
         BonusService service = new BonusService();
-        BigDecimal bonus = service.calcularBonus(new Funcionario("Rodrigo", LocalDate.now(), new BigDecimal(25000)));
-
-        Assertions.assertEquals(new BigDecimal("0.00"), bonus);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> service.calcularBonus(new Funcionario("Rodrigo", LocalDate.now(), new BigDecimal(25000))));
+        /*
+        *Outra implementação para captura de exception no Junit: utilizando um try catch*
+        try{
+        *   service.calcularBonus(new Funcionario("Rodrigo", LocalDate.now(), new BigDecimal(25000)));
+        *   Assertions.fail("Nao deu a exception!");
+        * }catch(Exception e){
+        *   Assertions.assertEquals("Funcionario com salario maior do que 10000 reais não pode receber bonus!", e.getMessage);
+        * }
+         */
     }
 
     @Test
